@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DreamRoom — Step Inside Your Possible Life</title>
+  <meta name="description" content="DreamRoom turns your hopes, tastes and future wishes into a beautiful AI-generated world of rooms, rituals and first steps." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-three"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="DreamRoom home">
+      <span class="brand-mark">DR</span>
+      <span>DreamRoom</span>
+    </a>
+    <nav class="top-nav" aria-label="Primary navigation">
+      <a href="#how">How it works</a>
+      <a href="#create">Create</a>
+      <a href="#preview">Preview</a>
+    </nav>
+    <button class="ghost-button small" id="sampleBtn" type="button">Try sample</button>
+  </header>
+
+  <main id="top">
+    <section class="hero section-shell">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">AI future-world builder</p>
+        <h1>Step inside your possible life.</h1>
+        <p class="hero-text">
+          Describe the life you secretly want, and DreamRoom turns it into an elegant, explorable world — rooms, rituals, style, people, purpose and a tiny first step back into real life.
+        </p>
+        <div class="hero-actions">
+          <a href="#create" class="primary-button">Open my DreamRoom</a>
+          <button class="secondary-button" type="button" data-scroll-to="preview">See the vibe</button>
+        </div>
+        <div class="trust-row" aria-label="DreamRoom features">
+          <span>Personal</span>
+          <span>Beautiful</span>
+          <span>AI-generated</span>
+          <span>Exportable</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal delay-1" aria-hidden="true">
+        <div class="moon"></div>
+        <div class="dream-door">
+          <div class="door-glow"></div>
+          <div class="door-frame">
+            <div class="door-panel">
+              <div class="door-window"></div>
+              <div class="door-handle"></div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-card card-one">
+          <span>Morning Room</span>
+          <strong>slow light, warm coffee, quiet confidence</strong>
+        </div>
+        <div class="floating-card card-two">
+          <span>Future Letter</span>
+          <strong>from the version of you who arrived</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="how section-shell reveal">
+      <div class="section-heading">
+        <p class="eyebrow">How it works</p>
+        <h2>Not a mood board. A room you can walk through.</h2>
+      </div>
+      <div class="steps-grid">
+        <article>
+          <span class="step-number">01</span>
+          <h3>Pour in the dream</h3>
+          <p>Answer a few rich, human questions about what you want more of, what you’re leaving behind and what your future should feel like.</p>
+        </article>
+        <article>
+          <span class="step-number">02</span>
+          <h3>AI opens the door</h3>
+          <p>DreamRoom uses AI to create a sensory future world with rooms for home, work, people, style, rituals, wellbeing and direction.</p>
+        </article>
+        <article>
+          <span class="step-number">03</span>
+          <h3>Take one tiny step</h3>
+          <p>You leave with a beautiful result, a letter from Future You and one grounded action that begins the world today.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="create" class="creator section-shell reveal">
+      <div class="creator-panel">
+        <div class="creator-intro">
+          <p class="eyebrow">Create yours</p>
+          <h2>Tell DreamRoom what life you’re quietly becoming.</h2>
+          <p>
+            This version includes a secure AI backend for Netlify/Vercel. If you open it locally without an API key, it still works in demo mode.
+          </p>
+          <div class="mode-pill" id="modePill">Demo until deployed with an API key</div>
+        </div>
+
+        <form id="dreamForm" class="dream-form">
+          <label class="field-block full">
+            <span>What kind of life are you dreaming of?</span>
+            <textarea name="dream" required minlength="20" placeholder="Example: I want a calm, elegant life near the sea, meaningful creative work, a warm family home, slow mornings, beauty, confidence and more freedom..."></textarea>
+          </label>
+
+          <div class="field-block full">
+            <span>Choose the atmosphere</span>
+            <div class="choice-grid" data-choice-group="atmosphere">
+              <button type="button" data-choice="Calm">Calm</button>
+              <button type="button" data-choice="Elegant">Elegant</button>
+              <button type="button" data-choice="Creative">Creative</button>
+              <button type="button" data-choice="Romantic">Romantic</button>
+              <button type="button" data-choice="Luxurious">Luxurious</button>
+              <button type="button" data-choice="Cosy">Cosy</button>
+              <button type="button" data-choice="Adventurous">Adventurous</button>
+              <button type="button" data-choice="Spiritual">Spiritual</button>
+              <button type="button" data-choice="Minimalist">Minimalist</button>
+              <button type="button" data-choice="Family-centred">Family-centred</button>
+            </div>
+          </div>
+
+          <div class="field-block full">
+            <span>What do you want more of?</span>
+            <div class="choice-grid" data-choice-group="moreOf">
+              <button type="button" data-choice="Peace">Peace</button>
+              <button type="button" data-choice="Confidence">Confidence</button>
+              <button type="button" data-choice="Beauty">Beauty</button>
+              <button type="button" data-choice="Love">Love</button>
+              <button type="button" data-choice="Money">Money</button>
+              <button type="button" data-choice="Freedom">Freedom</button>
+              <button type="button" data-choice="Creativity">Creativity</button>
+              <button type="button" data-choice="Meaning">Meaning</button>
+              <button type="button" data-choice="Stability">Stability</button>
+              <button type="button" data-choice="Adventure">Adventure</button>
+            </div>
+          </div>
+
+          <label class="field-block">
+            <span>How far into the future?</span>
+            <select name="horizon">
+              <option>6 months</option>
+              <option selected>1 year</option>
+              <option>3 years</option>
+              <option>5 years</option>
+              <option>10 years</option>
+            </select>
+          </label>
+
+          <label class="field-block">
+            <span>What should your future home feel like?</span>
+            <input name="home" placeholder="warm, airy, full of books, sea view, candles, cream linen..." />
+          </label>
+
+          <label class="field-block">
+            <span>What work, talent or purpose is there?</span>
+            <input name="purpose" placeholder="writing, business, teaching, creating, helping, building something..." />
+          </label>
+
+          <label class="field-block">
+            <span>Who is with you in that life?</span>
+            <input name="people" placeholder="family, friends, partner, children, community, mentors..." />
+          </label>
+
+          <label class="field-block full">
+            <span>What are you trying to leave behind?</span>
+            <textarea name="leaveBehind" placeholder="rushing, self-doubt, mess, comparison, feeling stuck, noise..."></textarea>
+          </label>
+
+          <button class="primary-button submit-button full" type="submit">
+            <span>Open my DreamRoom</span>
+            <span class="button-sparkle">✦</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="loading" class="loading-screen hidden" aria-live="polite" aria-busy="true">
+      <div class="loading-card">
+        <div class="orbital">
+          <span></span><span></span><span></span>
+        </div>
+        <h2>Building your rooms...</h2>
+        <p id="loadingLine">Finding the light under the door.</p>
+      </div>
+    </section>
+
+    <section id="result" class="result section-shell hidden">
+      <div class="result-hero">
+        <p class="eyebrow">Your DreamRoom</p>
+        <h2 id="resultTitle">Welcome to your possible life</h2>
+        <p id="doorText" class="door-text"></p>
+        <div class="result-actions no-print">
+          <button class="primary-button" id="printBtn" type="button">Save as PDF</button>
+          <button class="secondary-button" id="copyBtn" type="button">Copy text</button>
+          <button class="ghost-button" id="restartBtn" type="button">Start again</button>
+        </div>
+      </div>
+
+      <div class="result-layout">
+        <aside class="room-nav no-print" id="roomNav" aria-label="DreamRoom rooms"></aside>
+        <div class="room-stack" id="roomStack"></div>
+      </div>
+
+      <div class="final-panel" id="finalPanel"></div>
+    </section>
+
+    <section id="preview" class="preview section-shell reveal">
+      <div class="section-heading centred">
+        <p class="eyebrow">Preview</p>
+        <h2>Designed to feel like opening a private, beautiful world.</h2>
+      </div>
+      <div class="preview-grid">
+        <article class="preview-card tall">
+          <span class="room-icon">☼</span>
+          <h3>The Morning Room</h3>
+          <p>Where the future begins quietly: light, rhythm, energy, the first mood of the day.</p>
+        </article>
+        <article class="preview-card">
+          <span class="room-icon">⌂</span>
+          <h3>The Home Room</h3>
+          <p>Texture, colour, objects, privacy, beauty and what your space says about you.</p>
+        </article>
+        <article class="preview-card">
+          <span class="room-icon">✎</span>
+          <h3>The Work Room</h3>
+          <p>The version of your talent that finally has somewhere to go.</p>
+        </article>
+        <article class="preview-card wide">
+          <span class="room-icon">♡</span>
+          <h3>The People Room</h3>
+          <p>The emotional climate of your relationships: who is there, how it feels, what is protected.</p>
+        </article>
+        <article class="preview-card">
+          <span class="room-icon">✦</span>
+          <h3>The Wardrobe Room</h3>
+          <p>Style as identity — how your future self walks into the world.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>DreamRoom v2 — AI-ready prototype</p>
+    <p>Built as a beautiful first MVP. Keep your API key server-side only.</p>
+  </footer>
+
+  <template id="roomTemplate">
+    <article class="room-card">
+      <div class="room-card-top">
+        <span class="room-number"></span>
+        <h3></h3>
+      </div>
+      <p class="sensory"></p>
+      <div class="room-insight"></div>
+      <div class="room-step"></div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

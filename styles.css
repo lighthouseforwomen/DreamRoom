@@ -1,0 +1,136 @@
+const OpenAI = require('openai');
+
+
+const DREAMROOM_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['title', 'door', 'rooms', 'letter', 'doorwayStep', 'mantra', 'visionBoard'],
+  properties: {
+    title: { type: 'string' },
+    door: { type: 'string' },
+    rooms: {
+      type: 'array',
+      minItems: 8,
+      maxItems: 8,
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['name', 'sensory', 'insight', 'step'],
+        properties: {
+          name: { type: 'string' },
+          sensory: { type: 'string' },
+          insight: { type: 'string' },
+          step: { type: 'string' }
+        }
+      }
+    },
+    letter: { type: 'string' },
+    doorwayStep: { type: 'string' },
+    mantra: { type: 'string' },
+    visionBoard: {
+      type: 'array',
+      minItems: 9,
+      maxItems: 9,
+      items: { type: 'string' }
+    }
+  }
+};
+
+const SYSTEM_PROMPT = `You are DreamRoom, an elegant AI future-world builder.
+Create a personalised DreamRoom experience based only on the user's answers.
+Tone: beautiful, warm, cinematic, emotionally intelligent, grounded, vivid, not cheesy, not childish.
+Important boundaries: do not claim to predict the future. Do not diagnose. Do not give medical/legal/financial instructions. Frame everything as imaginative reflection and gentle first steps.
+Return ONLY valid JSON with this exact shape:
+{
+  "title": "short poetic title",
+  "door": "120-170 word welcome at the door",
+  "rooms": [
+    {"name":"The Morning Room","sensory":"130-180 words sensory description","insight":"one sentence about the user's values","step":"one tiny practical step"},
+    {"name":"The Home Room","sensory":"130-180 words sensory description","insight":"one sentence about the user's values","step":"one tiny practical step"},
+    {"name":"The Work Room","sensory":"130-180 words sensory description","insight":"one sentence about the user's values","step":"one tiny practical step"},
+    {"name":"The People Room","sensory":"130-180 words sensory description","insight":"one sentence about the user's values","step":"one tiny practical step"},
+    {"name":"The Wardrobe Room","sensory":"130-180 words sensory description","insight":"one sentence about the user's values","step":"one tiny practical step"},
+    {"name":"The Table Room","sensory":"130-180 words sensory description","insight":"one sentence about the user's values","step":"one tiny practical step"},
+    {"name":"The Garden Room","sensory":"130-180 words sensory description","insight":"one sentence about the user's values","step":"one tiny practical step"},
+    {"name":"The Roadmap Room","sensory":"130-180 words sensory description","insight":"one sentence about the user's values","step":"one tiny practical step"}
+  ],
+  "letter": "160-230 word letter from Future You",
+  "doorwayStep": "one specific step for this week",
+  "mantra": "short mantra",
+  "visionBoard": ["word or phrase", "word or phrase", "word or phrase", "word or phrase", "word or phrase", "word or phrase", "word or phrase", "word or phrase", "word or phrase"]
+}`;
+
+exports.handler = async function handler(event) {
+  if (event.httpMethod !== 'POST') {
+    return json(405, { error: 'Method not allowed' });
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
+    return json(500, { error: 'OPENAI_API_KEY is not set on the server.' });
+  }
+
+  let body;
+  try {
+    body = JSON.parse(event.body || '{}');
+  } catch (error) {
+    return json(400, { error: 'Invalid JSON body.' });
+  }
+
+  const clean = sanitiseInput(body);
+  if (!clean.dream || clean.dream.length < 20) {
+    return json(400, { error: 'Please provide a fuller dream description.' });
+  }
+
+  try {
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const response = await client.responses.create({
+      model: process.env.OPENAI_MODEL || 'gpt-5.5',
+      input: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: JSON.stringify(clean, null, 2) }
+      ],
+      text: {
+        format: {
+          type: 'json_schema',
+          name: 'dreamroom_response',
+          schema: DREAMROOM_SCHEMA,
+          strict: true
+        }
+      }
+    });
+
+    const parsed = JSON.parse(response.output_text);
+    return json(200, parsed);
+  } catch (error) {
+    console.error(error);
+    return json(500, { error: 'DreamRoom AI generation failed.' });
+  }
+};
+
+function sanitiseInput(input) {
+  return {
+    dream: limit(input.dream, 1800),
+    atmosphere: Array.isArray(input.atmosphere) ? input.atmosphere.slice(0, 10).map(x => limit(x, 40)) : [],
+    moreOf: Array.isArray(input.moreOf) ? input.moreOf.slice(0, 10).map(x => limit(x, 40)) : [],
+    horizon: limit(input.horizon || '1 year', 40),
+    home: limit(input.home, 600),
+    purpose: limit(input.purpose, 600),
+    people: limit(input.people, 600),
+    leaveBehind: limit(input.leaveBehind, 600)
+  };
+}
+
+function limit(value = '', max) {
+  return String(value || '').trim().slice(0, max);
+}
+
+function json(statusCode, payload) {
+  return {
+    statusCode,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    },
+    body: JSON.stringify(payload)
+  };
+}
