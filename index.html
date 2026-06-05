@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DreamRoom — Step inside your possible life</title>
+  <meta name="description" content="DreamRoom turns your future wishes into a beautiful AI-generated world of rooms, rituals and first steps." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div><div class="ambient ambient-three"></div>
+  <header class="site-header">
+    <a class="brand" href="#top"><span class="brand-mark">DR</span><span>DreamRoom</span></a>
+    <nav class="top-nav"><a href="#how">How it works</a><a href="#create">Create</a><a href="#result">Result</a></nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">AI future-world generator</div>
+        <h1>Step inside your <span class="gradient-text">possible life.</span></h1>
+        <p>Answer a few thoughtful questions and DreamRoom will build a personalised future world: part vision board, part journal, part roadmap.</p>
+        <div class="actions"><a class="btn primary" href="#create">Open my DreamRoom</a><a class="btn ghost" href="#how">See how it works</a></div>
+      </div>
+      <div class="hero-card" aria-hidden="true"><div class="door"><div class="door-glow"></div><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span></div></div>
+    </section>
+
+    <section id="how" class="section">
+      <div class="panel">
+        <p class="eyebrow">What it makes</p>
+        <h2>A world, not a worksheet.</h2>
+        <p class="muted">DreamRoom creates rooms for your future mornings, home, work, relationships, style, rituals, wellbeing and first practical steps.</p>
+        <div class="grid">
+          <div class="feature"><h3>The Door</h3><p class="muted">A cinematic welcome into the life you are quietly imagining.</p></div>
+          <div class="feature"><h3>The Rooms</h3><p class="muted">Beautiful, sensory chapters shaped around your answers.</p></div>
+          <div class="feature"><h3>The Roadmap</h3><p class="muted">One tiny doorway step you can actually take this week.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="create" class="section">
+      <div class="panel">
+        <p class="eyebrow">Create yours</p>
+        <h2>Tell DreamRoom what you’re becoming.</h2>
+        <form id="dreamForm" class="form-grid">
+          <div class="field"><label for="name">Your name</label><input id="name" name="name" placeholder="Mali" /></div>
+          <div class="field"><label for="futureTime">How far ahead?</label><select id="futureTime" name="futureTime"><option>1 year</option><option>3 years</option><option>5 years</option><option>10 years</option></select></div>
+          <div class="field full"><label for="dream">What kind of life are you dreaming of?</label><textarea id="dream" name="dream" required placeholder="A calm, elegant life with beauty, meaningful work, family, money, creativity, peace..."></textarea></div>
+          <div class="field full"><label>Choose an atmosphere</label><div class="chips" id="atmosphereChips"><button type="button" class="chip active">Calm</button><button type="button" class="chip">Elegant</button><button type="button" class="chip">Creative</button><button type="button" class="chip">Luxurious</button><button type="button" class="chip">Cosy</button><button type="button" class="chip">Adventurous</button><button type="button" class="chip">Spiritual</button><button type="button" class="chip">Family-centred</button></div></div>
+          <div class="field"><label for="home">Your future home feels like...</label><textarea id="home" name="home" placeholder="Light, warm, organised, beautiful..."></textarea></div>
+          <div class="field"><label for="purpose">Your work or purpose feels like...</label><textarea id="purpose" name="purpose" placeholder="What you create, build, earn, teach, write, design or lead..."></textarea></div>
+          <div class="field"><label for="people">Who is with you?</label><textarea id="people" name="people" placeholder="Family, friends, community, children, a calmer version of yourself..."></textarea></div>
+          <div class="field"><label for="behind">What are you leaving behind?</label><textarea id="behind" name="behind" placeholder="Stress, mess, fear, smallness, comparison, rushing..."></textarea></div>
+          <div class="field full actions"><button class="btn primary" type="submit">Build my DreamRoom</button><button class="btn ghost" type="reset">Clear</button></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="loading" class="section loading"><div class="panel loading-box"><div class="orb"></div><h2>Building your rooms...</h2><p class="muted">Finding the colours, rituals, textures and tiny first steps.</p></div></section>
+
+    <section id="result" class="section result">
+      <div class="panel">
+        <p class="eyebrow">Your DreamRoom</p>
+        <h2 id="resultTitle">Welcome</h2>
+        <p class="muted" id="doorText"></p>
+        <div class="actions"><button class="btn primary" id="downloadBtn">Save as PDF</button><button class="btn ghost" id="copyBtn">Copy text</button><a class="btn ghost" href="#create">Create another</a></div>
+        <div class="room-grid" id="rooms"></div>
+        <h2>A letter from future you</h2>
+        <div class="letter" id="letter"></div>
+        <div class="feature"><span class="tag">Doorway step</span><p id="step" class="muted"></p></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">DreamRoom © 2026</footer>
+  <script src="app.js"></script>
+</body>
+</html>
