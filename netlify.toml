@@ -6,3 +6,8 @@
   from = "/api/generate-dreamroom"
   to = "/.netlify/functions/generate-dreamroom"
   status = 200
+
+[[redirects]]
+  from = "/api/ask-dreamroom"
+  to = "/.netlify/functions/ask-dreamroom"
+  status = 200
