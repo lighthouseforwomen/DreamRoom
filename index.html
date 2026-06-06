@@ -3,165 +3,89 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>DreamRoom Studio — Build a possible life you can actually test</title>
-  <meta name="description" content="DreamRoom Studio is an AI life-design simulator that turns a vague dream into a future identity, reality gap, quest map and visual world." />
+  <title>DreamRoom Lab v3 — Visual life design lab</title>
+  <meta name="description" content="Build, save, compare, remix and visualise different possible lives." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="grain"></div>
-  <div class="blob blob-a"></div>
-  <div class="blob blob-b"></div>
-  <div class="blob blob-c"></div>
-
-  <header class="nav">
-    <a href="#top" class="logo"><span>DR</span><strong>DreamRoom Studio</strong></a>
-    <nav>
-      <a href="#studio">Studio</a>
-      <a href="#output">Blueprint</a>
-      <a href="#ask">Ask</a>
-    </nav>
+  <div class="bg b1"></div><div class="bg b2"></div><div class="grain"></div>
+  <header class="topbar">
+    <a class="logo" href="#top"><span>DR</span><b>DreamRoom Lab <em>v3</em></b></a>
+    <div class="top-actions"><button id="sampleBtn" class="btn ghost">Sample</button><button id="newBtn" class="btn ghost">New</button></div>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="kicker">AI life-design simulator</p>
-        <h1>Stop making mood boards. Build a possible life you can test.</h1>
-        <p class="lead">DreamRoom turns a messy wish into a usable life blueprint: future identity, reality gap, decision paths, 30-day quests, rooms, rituals and visual direction.</p>
-        <div class="cta-row">
-          <a class="button primary" href="#studio">Open the studio</a>
-          <button class="button ghost" id="sampleBtn" type="button">Load a sample</button>
-        </div>
-      </div>
-      <div class="console-card" aria-label="DreamRoom concept preview">
-        <div class="console-top"><span></span><span></span><span></span></div>
-        <div class="orbit">
-          <div class="core">YOU</div>
-          <div class="ring r1"></div>
-          <div class="ring r2"></div>
-          <div class="chip orbit-chip c1">Identity</div>
-          <div class="chip orbit-chip c2">Home</div>
-          <div class="chip orbit-chip c3">Money</div>
-          <div class="chip orbit-chip c4">Peace</div>
-        </div>
-        <div class="mini-grid">
-          <div><b>30</b><small>day quest</small></div>
-          <div><b>5</b><small>decision paths</small></div>
-          <div><b>8</b><small>future rooms</small></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="strip">
-      <div><strong>Not therapy.</strong><span>A creative planning tool.</span></div>
-      <div><strong>Not fortune-telling.</strong><span>It shows experiments, not predictions.</span></div>
-      <div><strong>Not generic motivation.</strong><span>It produces a usable blueprint.</span></div>
-    </section>
-
-    <section id="studio" class="layout">
-      <aside class="side-panel">
-        <p class="kicker">The studio</p>
-        <h2>Give it proper material.</h2>
-        <p>The stronger the input, the more specific the world. Do not write perfectly. Write honestly.</p>
-        <div class="meter"><span style="width:72%"></span></div>
-        <small>Output depth: blueprint, experiments, visual direction, quests.</small>
-      </aside>
-
-      <form id="dreamForm" class="studio-card">
-        <div class="field two">
-          <label>Name</label>
-          <input name="name" placeholder="Mali" />
-        </div>
-        <div class="field two">
-          <label>Timeframe</label>
-          <select name="timeframe"><option>90 days</option><option selected>1 year</option><option>3 years</option><option>5 years</option><option>10 years</option></select>
-        </div>
-        <div class="field full">
-          <label>The raw dream</label>
-          <textarea name="dream" required placeholder="I want a life that feels calmer, more beautiful, more successful, more spacious, more creative..."></textarea>
-        </div>
-        <div class="field full">
-          <label>What feels wrong or too small right now?</label>
-          <textarea name="currentReality" placeholder="What are you sick of? What feels chaotic, boring, cramped, embarrassing, draining or unfinished?"></textarea>
-        </div>
-        <div class="field full">
-          <label>Non-negotiables and constraints</label>
-          <textarea name="constraints" placeholder="Money limits, family commitments, religious values, location, energy, health, time, anything real it must respect..."></textarea>
-        </div>
-        <div class="field two">
-          <label>What do you want more of?</label>
-          <input name="moreOf" placeholder="money, peace, style, courage, romance, creativity..." />
-        </div>
-        <div class="field two">
-          <label>What must be left behind?</label>
-          <input name="lessOf" placeholder="rushing, comparison, mess, fear, tiny thinking..." />
-        </div>
-        <div class="field full">
-          <label>Choose the build mode</label>
-          <div class="choice-row" id="modeChoices">
-            <button type="button" class="choice active">Elegant life design</button>
-            <button type="button" class="choice">Ambitious upgrade</button>
-            <button type="button" class="choice">Peace reset</button>
-            <button type="button" class="choice">Main-character era</button>
-            <button type="button" class="choice">Decision simulator</button>
-          </div>
-        </div>
-        <div class="slider-grid">
-          <label>Peace <input name="peace" type="range" min="1" max="10" value="7" /></label>
-          <label>Money <input name="money" type="range" min="1" max="10" value="6" /></label>
-          <label>Beauty <input name="beauty" type="range" min="1" max="10" value="9" /></label>
-          <label>Freedom <input name="freedom" type="range" min="1" max="10" value="7" /></label>
-        </div>
-        <div class="action-line">
-          <button class="button primary" type="submit">Generate serious blueprint</button>
-          <button class="button ghost" type="reset">Clear</button>
-        </div>
-      </form>
-    </section>
-
-    <section id="loading" class="loading hidden">
-      <div class="spinner"></div>
-      <h2>Running the simulation...</h2>
-      <p>Building identity, gaps, paths, rooms, quests and visual prompts.</p>
-    </section>
-
-    <section id="output" class="output hidden">
-      <div class="output-head">
-        <div>
-          <p class="kicker">Your blueprint</p>
-          <h2 id="blueprintTitle">DreamRoom Blueprint</h2>
-          <p id="oneLine" class="lead small"></p>
-        </div>
-        <div class="cta-row"><button class="button primary" id="printBtn">Save / print</button><button class="button ghost" id="copyBtn">Copy</button></div>
-      </div>
-
-      <div class="tabs" id="tabs">
-        <button class="tab active" data-tab="identity">Identity</button>
-        <button class="tab" data-tab="gap">Reality gap</button>
-        <button class="tab" data-tab="paths">Paths</button>
-        <button class="tab" data-tab="quests">30-day quest</button>
-        <button class="tab" data-tab="rooms">Rooms</button>
-        <button class="tab" data-tab="visuals">Visual world</button>
-      </div>
-
-      <div class="tab-content active" id="identity"></div>
-      <div class="tab-content" id="gap"></div>
-      <div class="tab-content" id="paths"></div>
-      <div class="tab-content" id="quests"></div>
-      <div class="tab-content" id="rooms"></div>
-      <div class="tab-content" id="visuals"></div>
-
-      <section id="ask" class="ask-box">
-        <p class="kicker">Ask the blueprint</p>
-        <h3>Interrogate the future.</h3>
-        <p>Ask things like: “What should I do first?”, “Make it more luxurious”, “What am I avoiding?”, or “Turn this into a business idea.”</p>
-        <div class="ask-row"><input id="askInput" placeholder="Ask DreamRoom a follow-up..." /><button class="button primary" id="askBtn">Ask</button></div>
-        <div id="answer" class="answer hidden"></div>
+  <main id="top" class="shell">
+    <aside class="side">
+      <section class="panel intro">
+        <p class="kicker">Visual life-design lab</p>
+        <h1>Build different versions of you.</h1>
+        <p>Generate a version, save it, duplicate it, compare it, remix it and create visual design boards for the life you’re testing.</p>
       </section>
+      <section class="panel">
+        <div class="row"><h3>People / versions</h3><small id="savedCount">0 saved</small></div>
+        <div id="savedList" class="saved-list"></div>
+      </section>
+      <section class="panel">
+        <div class="row"><h3>Compare</h3><small id="compareCount">0/2</small></div>
+        <p class="hint">Tick two saved versions, then compare them side by side.</p>
+        <button id="compareBtn" class="btn primary wide">Compare selected</button>
+      </section>
+    </aside>
+
+    <section class="main">
+      <section class="hero panel">
+        <div>
+          <p class="kicker">No more pointless mood-board fluff</p>
+          <h2>Make a future you can actually see and test.</h2>
+          <p class="lead">DreamRoom v3 produces a proper blueprint plus visual worlds: palette, home board, wardrobe board, work board, image prompts, saved versions and remix buttons.</p>
+        </div>
+        <div class="mini-stats"><div><b>∞</b><span>versions</span></div><div><b>3</b><span>visual boards</span></div><div><b>AI</b><span>image concepts</span></div></div>
+      </section>
+
+      <section id="studio" class="panel">
+        <div class="row wrap"><div><p class="kicker">Studio</p><h2>Create a version</h2></div><div class="pill-row"><span>save</span><span>compare</span><span>visualise</span><span>remix</span></div></div>
+        <form id="dreamForm" class="form">
+          <label>Name<input name="name" placeholder="Mali" /></label>
+          <label>Version / persona<input name="versionName" placeholder="Luxury Me / Peaceful Me / Business Me" /></label>
+          <label>Timeframe<select name="timeframe"><option>90 days</option><option selected>1 year</option><option>3 years</option><option>5 years</option></select></label>
+          <label>Mode<select name="mode"><option>Elegant life design</option><option>Ambitious upgrade</option><option>Peace reset</option><option>Main-character era</option><option>Decision simulator</option></select></label>
+          <label class="full">Raw dream<textarea name="dream" required placeholder="What kind of life do you want? Be honest and specific."></textarea></label>
+          <label class="full">Current reality / frustration<textarea name="currentReality" placeholder="What feels boring, chaotic, small, ugly, rushed or unfinished right now?"></textarea></label>
+          <label class="full">Constraints / non-negotiables<textarea name="constraints" placeholder="Money, time, values, family, location, energy — what must this respect?"></textarea></label>
+          <label>More of<input name="moreOf" placeholder="beauty, peace, money, confidence..." /></label>
+          <label>Less of<input name="lessOf" placeholder="mess, rushing, fear, vagueness..." /></label>
+          <label>Home style<input name="homeStyle" placeholder="quiet luxury, warm modern, cosy grand..." /></label>
+          <label>Work / money vehicle<input name="workStyle" placeholder="business, writing, design, teaching..." /></label>
+          <div class="sliders full">
+            <label>Peace<input name="peace" type="range" min="1" max="10" value="7"></label>
+            <label>Money<input name="money" type="range" min="1" max="10" value="6"></label>
+            <label>Beauty<input name="beauty" type="range" min="1" max="10" value="9"></label>
+            <label>Freedom<input name="freedom" type="range" min="1" max="10" value="7"></label>
+          </div>
+          <div class="actions full"><button class="btn primary" type="submit">Generate DreamRoom v3</button><button class="btn ghost" type="reset">Clear</button></div>
+        </form>
+      </section>
+
+      <section id="loading" class="panel loading hidden"><div class="spinner"></div><h2>Building the version...</h2><p>Blueprint, rooms, design boards, palettes, quests and visual prompts.</p></section>
+
+      <section id="output" class="panel output hidden">
+        <div class="row wrap output-head">
+          <div><p class="kicker">Current version</p><h2 id="title">DreamRoom</h2><p id="oneLine" class="lead"></p></div>
+          <div class="actions"><button id="saveBtn" class="btn primary">Save</button><button id="dupeBtn" class="btn ghost">Duplicate</button><button id="copyBtn" class="btn ghost">Copy</button><button id="printBtn" class="btn ghost">Print</button></div>
+        </div>
+        <div class="remix"><button data-remix="more luxurious">More luxurious</button><button data-remix="more realistic">More realistic</button><button data-remix="more ambitious">More ambitious</button><button data-remix="calmer and simpler">Calmer</button><button data-remix="turn it into a business plan">Business plan</button></div>
+        <nav class="tabs"><button class="active" data-tab="identity">Identity</button><button data-tab="visuals">Visual boards</button><button data-tab="rooms">Rooms</button><button data-tab="plan">Plan</button><button data-tab="ask">Ask</button></nav>
+        <div id="identity" class="tab active"></div>
+        <div id="visuals" class="tab"></div>
+        <div id="rooms" class="tab"></div>
+        <div id="plan" class="tab"></div>
+        <div id="ask" class="tab ask"><h3>Ask this version</h3><p class="hint">Ask how to refine, monetise, simplify, make it prettier, or make it actually doable.</p><div class="ask-row"><input id="askInput" placeholder="Ask DreamRoom..." /><button id="askBtn" class="btn primary">Ask</button></div><div id="answer" class="answer hidden"></div></div>
+      </section>
+
+      <section id="comparePanel" class="panel hidden"><div class="row wrap"><div><p class="kicker">Compare lab</p><h2>Two possible lives, side by side</h2></div><button id="clearCompareBtn" class="btn ghost">Clear</button></div><div id="compareGrid" class="compare-grid"></div></section>
     </section>
   </main>
-
-  <footer>DreamRoom Studio © 2026 — creative planning, not prediction.</footer>
+  <footer>DreamRoom Lab v3 — local saved versions + AI visual concepts.</footer>
   <script src="app.js"></script>
 </body>
 </html>
