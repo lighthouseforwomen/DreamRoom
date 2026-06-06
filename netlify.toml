@@ -11,3 +11,8 @@
   from = "/api/ask-dreamroom"
   to = "/.netlify/functions/ask-dreamroom"
   status = 200
+
+[[redirects]]
+  from = "/api/generate-visual"
+  to = "/.netlify/functions/generate-visual"
+  status = 200
