@@ -237,6 +237,7 @@ async function handleBodyClick(event) {
 async function generateVisual(button) {
   const board = button.closest('.board');
   const prompt = button.dataset.prompt || 'premium dreamroom visual concept';
+  const palette = (currentBlueprint && currentBlueprint.visualSystem && currentBlueprint.visualSystem.palette) || [];
   button.textContent = 'Generating...';
   button.disabled = true;
 
@@ -244,7 +245,7 @@ async function generateVisual(button) {
     const response = await fetch('/api/generate-visual', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({ prompt, palette }),
     });
     const data = await response.json();
     if (!response.ok || !data.image) throw new Error(data.detail || data.error || 'Visual failed');
@@ -255,10 +256,16 @@ async function generateVisual(button) {
     const oldImage = visual.querySelector('img');
     if (oldImage) oldImage.remove();
     visual.prepend(image);
-    button.textContent = 'Regenerate visual';
+    button.textContent = data.fallback ? 'Generated moodboard' : 'Regenerate visual';
   } catch (error) {
-    button.textContent = 'Visual unavailable';
-    button.title = error.message || 'Visual generation failed';
+    const image = document.createElement('img');
+    image.src = makeLocalVisual(prompt, palette);
+    const visual = board.querySelector('.board-img');
+    const oldImage = visual.querySelector('img');
+    if (oldImage) oldImage.remove();
+    visual.prepend(image);
+    button.textContent = 'Generated moodboard';
+    button.title = 'A local visual was generated because the image endpoint was unavailable.';
   } finally {
     button.disabled = false;
   }
@@ -451,6 +458,45 @@ function listPills(items) {
 
 function compareBlock(label, value) {
   return `<div class="compare-block"><strong>${safe(label)}</strong><p>${safe(value || '')}</p></div>`;
+}
+
+function makeLocalVisual(prompt, palette) {
+  const colours = normalisePalette(palette);
+  const title = prompt.split(',')[0].slice(0, 34) || 'DreamRoom moodboard';
+  const subtitle = prompt.split(',').slice(1, 3).join(' · ').slice(0, 58) || 'visual direction';
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="${colours[0]}"/><stop offset="52%" stop-color="${colours[1]}"/><stop offset="100%" stop-color="${colours[2]}"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="1200" fill="url(#g)"/>
+      <circle cx="1040" cy="160" r="260" fill="${colours[3]}" opacity="0.38"/>
+      <circle cx="130" cy="1040" r="300" fill="${colours[4]}" opacity="0.32"/>
+      <rect x="88" y="88" width="1024" height="1024" rx="58" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.36)"/>
+      <rect x="150" y="160" width="425" height="580" rx="38" fill="rgba(255,255,255,.22)"/>
+      <rect x="625" y="160" width="425" height="265" rx="38" fill="rgba(255,255,255,.2)"/>
+      <rect x="625" y="475" width="425" height="265" rx="38" fill="rgba(255,255,255,.16)"/>
+      <rect x="150" y="790" width="900" height="235" rx="38" fill="rgba(255,255,255,.14)"/>
+      <text x="675" y="260" font-family="Georgia,serif" font-size="58" fill="#fff8ef" font-weight="700">${escapeSvg(title)}</text>
+      <text x="675" y="326" font-family="Arial,sans-serif" font-size="26" fill="rgba(255,248,239,.82)">${escapeSvg(subtitle)}</text>
+      ${colours.map((colour, index) => `<rect x="${205 + index * 160}" y="850" width="110" height="110" rx="28" fill="${colour}" stroke="rgba(255,255,255,.55)"/>`).join('')}
+    </svg>`;
+  return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
+}
+
+function normalisePalette(palette) {
+  const fallback = ['#2e1837', '#f8f2e8', '#e4c06a', '#c9889f', '#90c7d1'];
+  const extracted = (Array.isArray(palette) ? palette : []).map((item) => {
+    if (typeof item === 'string') return item;
+    return item.hex || item.color || item.colour;
+  }).filter((value) => /^#[0-9a-fA-F]{6}$/.test(value));
+  return [...extracted, ...fallback].slice(0, 5);
+}
+
+function escapeSvg(value) {
+  return String(value).replace(/[<>&'"]/g, (char) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' }[char]));
 }
 
 function loadSavedVersions() {
